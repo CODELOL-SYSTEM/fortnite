@@ -4,9 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fortnite Shop</title>
+<meta name="theme-color" content="#070b14">
+<title>Fortnite Store</title>
 
 <style>
+:root {
+    --green: #08cf59;
+    --blue: #087fff;
+    --orange: #ff940e;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -15,341 +22,526 @@
 
 body {
     min-height: 100vh;
-    padding: 55px 25px;
-    background:
-        radial-gradient(ellipse at 15% 20%, #063d3b 0%, transparent 40%),
-        radial-gradient(ellipse at 90% 90%, #062b55 0%, transparent 45%),
-        #080d15;
+    overflow-x: hidden;
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: Inter, Arial, sans-serif;
+    background:
+        radial-gradient(ellipse at 10% 10%, #063b3545, transparent 40%),
+        radial-gradient(ellipse at 90% 80%, #0757a445, transparent 45%),
+        #070b14;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: .18;
+    pointer-events: none;
+    z-index: -1;
+}
+
+body::before {
+    background: #00d879;
+    top: -180px;
+    left: -180px;
+}
+
+body::after {
+    background: #087fff;
+    bottom: -180px;
+    right: -180px;
+}
+
+button, input {
+    font: inherit;
 }
 
 .container {
-    max-width: 1200px;
+    width: min(1450px, 100%);
     margin: auto;
+    padding: 55px 35px 80px;
 }
 
-/* RECHERCHE */
+/* SEARCH */
 
-.search-container {
-    max-width: 850px;
-    margin: 0 auto 55px;
+.search-area {
+    width: min(850px, 100%);
+    margin: 0 auto 65px;
 }
 
 .search {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 10px 8px 25px;
-    border-radius: 50px;
-    background: rgba(255,255,255,0.09);
-    border: 1px solid rgba(255,255,255,0.35);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    padding: 9px 10px 9px 24px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.075);
+    border: 1px solid rgba(255,255,255,.38);
+    backdrop-filter: blur(35px) saturate(180%);
+    -webkit-backdrop-filter: blur(35px) saturate(180%);
     box-shadow:
-        inset 0 2px 5px rgba(255,255,255,.15),
-        0 10px 35px rgba(0,0,0,.3);
+        inset 0 2px 4px #ffffff25,
+        inset 0 -2px 5px #0004,
+        0 15px 45px #0006,
+        0 0 35px #087fff20;
+    transition: .3s;
+}
+
+.search:focus-within {
+    border-color: #53caff;
+    box-shadow:
+        inset 0 2px 4px #ffffff35,
+        0 0 35px #087fff50;
+}
+
+.search-icon {
+    color: #c9d9ed;
+    font-size: 24px;
 }
 
 .search input {
-    flex: 1;
     min-width: 0;
+    flex: 1;
+    padding: 17px 5px;
+    border: 0;
+    outline: 0;
     background: transparent;
-    border: none;
-    outline: none;
     color: white;
     font-size: 17px;
-    padding: 16px 0;
 }
 
 .search input::placeholder {
-    color: #c2cbd8;
+    color: #b8c3d3;
 }
 
 .search button {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
     border: 1px solid #ffffff80;
-    background: #168aff;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #24a6ff, #0756ed);
     color: white;
-    font-size: 23px;
+    font-size: 25px;
     cursor: pointer;
-    transition: .2s;
+    box-shadow: 0 0 25px #168aff70,
+                inset 0 2px 5px #ffffff60;
+    transition: .25s;
 }
 
 .search button:hover {
-    transform: scale(1.08);
+    transform: scale(1.09);
+    box-shadow: 0 0 35px #168affaa;
 }
 
-/* RESULTAT */
+.search button:active {
+    transform: scale(.94);
+}
+
+.error {
+    display: none;
+    color: #ff8585;
+    text-align: center;
+    margin-top: 14px;
+    font-size: 13px;
+}
+
+/* RESULTS */
 
 #result {
     display: none;
-    animation: appear .5s ease;
 }
 
-@keyframes appear {
+#result.visible {
+    display: block;
+    animation: resultIn .65s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes resultIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(28px) scale(.98);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .layout {
     display: grid;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 260px minmax(0,1fr);
     align-items: center;
-    gap: 30px;
+    gap: 35px;
 }
 
-/* SKIN */
+/* PLAYER */
 
 .player {
     text-align: center;
+    min-width: 0;
 }
 
-.skin-circle {
-    width: 185px;
-    height: 185px;
+.skin-frame {
+    position: relative;
+    width: 220px;
+    height: 220px;
     margin: auto;
     padding: 5px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00eaff, #147dff);
-    box-shadow: 0 0 30px #008cff80;
+    background: conic-gradient(
+        from 0deg,
+        #00e5ff,
+        #087fff,
+        #00edb0,
+        #087fff,
+        #00e5ff
+    );
+    box-shadow:
+        0 0 25px #008cff85,
+        0 0 65px #008cff30;
+    animation: frameGlow 4s ease-in-out infinite;
 }
 
-.skin-circle img {
+@keyframes frameGlow {
+    0%,100% {
+        box-shadow: 0 0 25px #008cff75, 0 0 55px #008cff25;
+    }
+    50% {
+        box-shadow: 0 0 38px #00e5ffb0, 0 0 85px #008cff55;
+    }
+}
+
+.skin-inner {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     border-radius: 50%;
+    background: #14243c;
+    border: 5px solid #101b2b;
+}
+
+.skin-inner img {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 4px solid #172c48;
 }
 
 .player-name {
-    margin-top: 20px;
+    margin-top: 23px;
     font-size: 23px;
     font-weight: 900;
+    color: #fff;
     overflow-wrap: anywhere;
+    text-shadow: 0 2px 15px #ffffff30;
 }
 
 .player-label {
     margin-top: 8px;
     font-size: 11px;
     letter-spacing: 3px;
-    color: #b7c8dd;
+    color: #9eb8d8;
 }
 
-/* CARTES */
+/* OFFERS */
 
 .offers {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 19px;
+    align-items: stretch;
 }
 
 .card {
+    --card-color: #ffffff;
     position: relative;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
     overflow: hidden;
-    padding: 22px 15px;
-    border-radius: 24px;
+    isolation: isolate;
+    padding: 23px 17px 18px;
+    border: 1px solid rgba(255,255,255,.75);
+    border-radius: 27px;
     text-align: center;
-    border: 2px solid rgba(255,255,255,.65);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    background: var(--card-color);
     box-shadow:
-        inset 0 2px 8px rgba(255,255,255,.35),
-        0 12px 30px rgba(0,0,0,.3);
-    transition: transform .3s, box-shadow .3s;
+        inset 0 2px 5px #ffffffa0,
+        inset 0 -5px 12px #0002,
+        0 15px 35px #0005,
+        0 0 35px var(--card-color);
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        box-shadow .35s;
 }
 
-/* COULEURS UNIFORMES */
-
 .card.green {
-    background: #08b94f;
-    box-shadow:
-        inset 0 2px 12px #ffffff70,
-        0 0 30px #00e96b70;
+    --card-color: #08c951;
 }
 
 .card.blue {
-    background: #087ce8;
-    box-shadow:
-        inset 0 2px 12px #ffffff70,
-        0 0 30px #168cff70;
+    --card-color: #0878ed;
 }
 
 .card.orange {
-    background: #f28a08;
-    box-shadow:
-        inset 0 2px 12px #ffffff70,
-        0 0 30px #ff9b2070;
+    --card-color: #f18b08;
 }
 
 .card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-11px) scale(1.025);
+    box-shadow:
+        inset 0 2px 7px #ffffffbb,
+        inset 0 -5px 12px #0002,
+        0 22px 45px #0006,
+        0 0 45px var(--card-color);
 }
 
-/* REFLET LIQUID GLASS */
+/* LIQUID GLASS LAYERS */
 
 .card::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: -120%;
-    width: 70%;
-    height: 100%;
-    background: linear-gradient(
-        110deg,
-        transparent,
-        rgba(255,255,255,.24),
-        transparent
-    );
-    transform: skewX(-20deg);
-    transition: .7s;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(
+            125deg,
+            #ffffff65 0%,
+            transparent 25%,
+            transparent 60%,
+            #ffffff24 100%
+        );
     pointer-events: none;
 }
 
-.card:hover::before {
-    left: 150%;
+.card::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -75%;
+    width: 65%;
+    height: 300%;
+    z-index: 2;
+    transform: rotate(28deg);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffffff38,
+        transparent
+    );
+    transition: left .8s ease;
+    pointer-events: none;
 }
 
-.card img {
+.card:hover::after {
+    left: 140%;
+}
+
+.card-content {
     position: relative;
-    z-index: 1;
+    z-index: 3;
+}
+
+.product-image {
     width: 100%;
-    height: 145px;
+    height: 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 8px 8px rgba(0,0,0,.25));
+    filter:
+        drop-shadow(0 10px 8px #0004)
+        drop-shadow(0 0 10px #ffffff55);
+    transition: transform .4s;
+}
+
+.card:hover .product-image img {
+    transform: scale(1.09) rotate(-2deg);
 }
 
 .card h2 {
-    position: relative;
-    z-index: 1;
-    font-size: 18px;
-    font-weight: 900;
-    margin: 15px 0 20px;
+    min-height: 25px;
+    margin-bottom: 19px;
     color: white;
-    text-shadow: 0 2px 4px #0003;
+    font-size: 19px;
+    font-weight: 950;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 5px #0003;
 }
 
-/* PRIX */
+/* PRICE BUTTON */
 
 .price {
     position: relative;
-    z-index: 1;
+    z-index: 4;
     display: block;
     width: 100%;
-    padding: 15px 5px;
-    border-radius: 14px;
+    padding: 15px 8px;
+    border: 1px solid #ffffffbd;
+    border-radius: 15px;
     color: white;
     text-decoration: none;
-    font-size: 27px;
-    font-weight: 900;
-    border: 1px solid rgba(255,255,255,.8);
-    background: rgba(255,255,255,.22);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    font-size: 28px;
+    font-weight: 950;
+    background: rgba(255,255,255,.20);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
     box-shadow:
-        inset 0 2px 8px rgba(255,255,255,.3),
-        0 5px 15px rgba(0,0,0,.15);
-    transition: .2s;
+        inset 0 2px 5px #ffffff75,
+        inset 0 -2px 5px #0002,
+        0 6px 15px #0002;
+    text-shadow: 0 2px 4px #0003;
+    transition: .25s;
 }
 
 .price:hover {
     background: rgba(255,255,255,.38);
-    transform: scale(1.04);
+    transform: scale(1.045);
+    box-shadow:
+        inset 0 2px 7px #ffffffaa,
+        0 0 20px #ffffff60;
 }
 
-/* OFFRE COMPLETE */
+.price:active {
+    transform: scale(.97);
+}
+
+/* COMPLETE OFFER */
 
 .combined {
-    position: relative;
-    z-index: 1;
+    width: 100%;
+    height: 165px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    height: 145px;
+    gap: 4px;
+    margin-bottom: 17px;
 }
 
 .combined img {
     width: 43%;
-    height: 125px;
+    height: 145px;
+    object-fit: contain;
+    filter:
+        drop-shadow(0 8px 7px #0004)
+        drop-shadow(0 0 9px #ffffff55);
+    transition: transform .35s;
+}
+
+.card:hover .combined img:first-child {
+    transform: translateX(-4px) scale(1.06);
+}
+
+.card:hover .combined img:last-child {
+    transform: translateX(4px) scale(1.06);
 }
 
 .plus {
-    font-size: 35px;
-    font-weight: 900;
     color: white;
-    text-shadow: 0 2px 5px #0004;
+    font-size: 35px;
+    font-weight: 1000;
+    text-shadow: 0 3px 8px #0004;
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 
-@media(max-width: 900px) {
+@media(max-width: 1050px) {
     .layout {
         grid-template-columns: 1fr;
+        gap: 35px;
     }
 
     .player {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 }
 
-@media(max-width: 650px) {
-    body {
-        padding: 25px 14px;
+@media(max-width: 700px) {
+    .container {
+        padding: 30px 16px 55px;
+    }
+
+    .search-area {
+        margin-bottom: 40px;
     }
 
     .offers {
         grid-template-columns: 1fr;
+        gap: 17px;
     }
 
     .card {
         display: grid;
-        grid-template-columns: 120px 1fr;
+        grid-template-columns: 125px minmax(0,1fr);
+        grid-template-rows: auto auto;
         align-items: center;
-        gap: 10px 15px;
+        gap: 8px 15px;
         padding: 15px;
+        min-height: 145px;
     }
 
-    .card > img,
+    .product-image,
     .combined {
-        grid-row: span 2;
+        grid-column: 1;
+        grid-row: 1 / 3;
+        height: 115px;
+        margin: 0;
     }
 
-    .card > img {
-        height: 110px;
-    }
-
-    .combined {
-        height: 110px;
+    .product-image img {
+        height: 115px;
     }
 
     .combined img {
-        height: 95px;
+        height: 105px;
     }
 
     .card h2 {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: end;
         margin: 0;
+        min-height: 0;
         font-size: 16px;
     }
 
     .price {
+        grid-column: 2;
+        grid-row: 2;
+        align-self: start;
+        padding: 10px;
         font-size: 23px;
-        padding: 11px;
     }
 
-    .skin-circle {
-        width: 155px;
-        height: 155px;
+    .card:hover {
+        transform: translateY(-4px);
+    }
+
+    .skin-frame {
+        width: 170px;
+        height: 170px;
+    }
+
+    .player-name {
+        font-size: 20px;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
     }
 }
 </style>
@@ -357,47 +549,58 @@ body {
 
 <body>
 
-<div class="container">
+<main class="container">
 
-    <div class="search-container">
+    <div class="search-area">
         <form class="search" id="searchForm">
+            <span class="search-icon">⌕</span>
+
             <input
-                type="text"
                 id="pseudo"
+                type="text"
                 placeholder="Rechercher un pseudo Fortnite..."
                 autocomplete="off"
                 maxlength="30"
                 required
             >
-            <button type="submit">➜</button>
+
+            <button type="submit" aria-label="Rechercher">➜</button>
         </form>
+
+        <div class="error" id="error"></div>
     </div>
 
     <section id="result">
 
         <div class="layout">
 
-            <div class="player">
+            <!-- SKIN DU JOUEUR -->
 
-                <div class="skin-circle">
-                    <img
-                        src="https://pbs.twimg.com/media/HEPyt5tagAApJHd?format=jpg&name=small"
-                        alt="Skin Fortnite"
-                    >
+            <div class="player">
+                <div class="skin-frame">
+                    <div class="skin-inner">
+                        <img
+                            id="skinImage"
+                            src="https://pbs.twimg.com/media/HEPyt5tagAApJHd?format=jpg&name=small"
+                            alt="Skin du joueur"
+                        >
+                    </div>
                 </div>
 
                 <div class="player-name" id="playerName"></div>
                 <div class="player-label">FORTNITE PLAYER</div>
-
             </div>
+
+            <!-- LES TROIS OFFRES -->
 
             <div class="offers">
 
-                <!-- 1 : V-BUCKS VERT -->
+                <!-- OFFRE 1 VERTE -->
 
                 <article class="card green">
-
-                    <img src="vbuck.png" alt="V-Bucks">
+                    <div class="product-image">
+                        <img src="vbuck.png" alt="V-Bucks">
+                    </div>
 
                     <h2>V-BUCKS</h2>
 
@@ -405,16 +608,16 @@ body {
                         class="price"
                         href="https://paypal.me/SH0PNOVA/8EUR"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                     >8 €</a>
-
                 </article>
 
-                <!-- 2 : JETONS BLEU -->
+                <!-- OFFRE 2 BLEUE -->
 
                 <article class="card blue">
-
-                    <img src="jeton.png" alt="Jetons">
+                    <div class="product-image">
+                        <img src="jeton.png" alt="Jetons">
+                    </div>
 
                     <h2>JETONS</h2>
 
@@ -422,23 +625,17 @@ body {
                         class="price"
                         href="https://paypal.me/SH0PNOVA/13EUR"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                     >13 €</a>
-
                 </article>
 
-                <!-- 3 : LES DEUX ORANGE -->
+                <!-- OFFRE 3 ORANGE -->
 
                 <article class="card orange">
-
                     <div class="combined">
-
                         <img src="vbuck.png" alt="V-Bucks">
-
                         <span class="plus">+</span>
-
                         <img src="jeton.png" alt="Jetons">
-
                     </div>
 
                     <h2>OFFRE COMPLÈTE</h2>
@@ -447,18 +644,16 @@ body {
                         class="price"
                         href="https://paypal.me/SH0PNOVA/17EUR"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                     >17 €</a>
-
                 </article>
 
             </div>
-
         </div>
 
     </section>
 
-</div>
+</main>
 
 <script src="app.js"></script>
 
