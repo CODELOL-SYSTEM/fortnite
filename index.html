@@ -2,425 +2,465 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortnite Shop</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortnite Shop</title>
 
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(ellipse at 15% 20%, #063b2855, transparent 40%),
-                radial-gradient(ellipse at 85% 80%, #063b5555, transparent 40%),
-                #05080d;
-            color: white;
-            font-family: Arial, sans-serif;
-            padding: 55px 25px;
-            overflow-x: hidden;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .container {
-            max-width: 1150px;
-            margin: auto;
-        }
+body {
+    min-height: 100vh;
+    padding: 55px 25px;
+    background:
+        radial-gradient(ellipse at 15% 20%, #063d3b 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 90%, #062b55 0%, transparent 45%),
+        #080d15;
+    color: white;
+    font-family: Arial, sans-serif;
+}
 
-        /* RECHERCHE */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
 
-        .search-wrapper {
-            max-width: 850px;
-            margin: auto;
-        }
+/* RECHERCHE */
 
-        .search {
-            display: flex;
-            align-items: center;
-            padding: 7px 10px 7px 22px;
-            border-radius: 50px;
-            background: rgba(255,255,255,0.055);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            box-shadow:
-                0 0 25px rgba(0,180,255,0.12),
-                inset 0 1px 2px rgba(255,255,255,0.2);
-            transition: .3s;
-        }
+.search-container {
+    max-width: 850px;
+    margin: 0 auto 55px;
+}
 
-        .search:focus-within {
-            border-color: #25d9a0;
-            box-shadow: 0 0 30px #00e99c33;
-        }
+.search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px 8px 25px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow:
+        inset 0 2px 5px rgba(255,255,255,.15),
+        0 10px 35px rgba(0,0,0,.3);
+}
 
-        .search input {
-            flex: 1;
-            min-width: 0;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: white;
-            font-size: 17px;
-            padding: 15px 5px;
-        }
+.search input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 17px;
+    padding: 16px 0;
+}
 
-        .search input::placeholder {
-            color: #aeb7c5;
-        }
+.search input::placeholder {
+    color: #c2cbd8;
+}
 
-        .search button {
-            border: 1px solid #ffffff35;
-            border-radius: 50px;
-            padding: 13px 23px;
-            background: rgba(255,255,255,.12);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            backdrop-filter: blur(15px);
-        }
+.search button {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid #ffffff80;
+    background: #168aff;
+    color: white;
+    font-size: 23px;
+    cursor: pointer;
+    transition: .2s;
+}
 
-        .search button:hover {
-            background: rgba(255,255,255,.25);
-        }
+.search button:hover {
+    transform: scale(1.08);
+}
 
-        /* RESULTAT */
+/* RESULTAT */
 
-        #result {
-            display: none;
-            margin-top: 55px;
-            animation: appear .6s ease;
-        }
+#result {
+    display: none;
+    animation: appear .5s ease;
+}
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .shop-layout {
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 30px;
-            align-items: center;
-        }
+.layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: center;
+    gap: 30px;
+}
 
-        /* SKIN */
+/* SKIN */
 
-        .player {
-            text-align: center;
-        }
+.player {
+    text-align: center;
+}
 
-        .skin-circle {
-            width: 190px;
-            height: 190px;
-            margin: auto;
-            padding: 6px;
-            border-radius: 50%;
-            background: linear-gradient(135deg,#00e98c,#00aaff);
-            box-shadow: 0 0 30px #00cfff55;
-        }
+.skin-circle {
+    width: 185px;
+    height: 185px;
+    margin: auto;
+    padding: 5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00eaff, #147dff);
+    box-shadow: 0 0 30px #008cff80;
+}
 
-        .skin-circle img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #101820;
-        }
+.skin-circle img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #172c48;
+}
 
-        .player-name {
-            margin-top: 18px;
-            font-size: 20px;
-            font-weight: bold;
-            overflow-wrap: anywhere;
-        }
+.player-name {
+    margin-top: 20px;
+    font-size: 23px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
 
-        .player-label {
-            margin-top: 6px;
-            font-size: 11px;
-            color: #aab4c3;
-            letter-spacing: 2px;
-        }
+.player-label {
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #b7c8dd;
+}
 
-        /* CARTES */
+/* CARTES */
 
-        .offers {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 17px;
-        }
+.offers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
 
-        .offer {
-            position: relative;
-            overflow: hidden;
-            min-width: 0;
-            padding: 22px 15px;
-            text-align: center;
-            border-radius: 23px;
-            background: rgba(255,255,255,.055);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,.2);
-            box-shadow:
-                inset 0 1px 2px rgba(255,255,255,.2),
-                0 15px 40px rgba(0,0,0,.3);
-            transition: transform .3s, box-shadow .3s;
-        }
+.card {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    padding: 22px 15px;
+    border-radius: 24px;
+    text-align: center;
+    border: 2px solid rgba(255,255,255,.65);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow:
+        inset 0 2px 8px rgba(255,255,255,.35),
+        0 12px 30px rgba(0,0,0,.3);
+    transition: transform .3s, box-shadow .3s;
+}
 
-        .offer:hover {
-            transform: translateY(-7px);
-        }
+/* COULEURS UNIFORMES */
 
-        .offer.green {
-            border-color: #14e889aa;
-            box-shadow: 0 0 25px #00e87920,
-                        inset 0 1px 2px #ffffff30;
-        }
+.card.green {
+    background: #08b94f;
+    box-shadow:
+        inset 0 2px 12px #ffffff70,
+        0 0 30px #00e96b70;
+}
 
-        .offer.blue {
-            border-color: #168dffaa;
-            box-shadow: 0 0 25px #008cff20,
-                        inset 0 1px 2px #ffffff30;
-        }
+.card.blue {
+    background: #087ce8;
+    box-shadow:
+        inset 0 2px 12px #ffffff70,
+        0 0 30px #168cff70;
+}
 
-        .offer.orange {
-            border-color: #ff9e22aa;
-            box-shadow: 0 0 25px #ff9e2220,
-                        inset 0 1px 2px #ffffff30;
-        }
+.card.orange {
+    background: #f28a08;
+    box-shadow:
+        inset 0 2px 12px #ffffff70,
+        0 0 30px #ff9b2070;
+}
 
-        .offer::before {
-            content: "";
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            top: -110px;
-            left: -70px;
-            background: rgba(255,255,255,.10);
-            filter: blur(35px);
-            pointer-events: none;
-        }
+.card:hover {
+    transform: translateY(-8px);
+}
 
-        .offer img {
-            position: relative;
-            width: 100%;
-            height: 135px;
-            object-fit: contain;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 8px 12px #0008);
-        }
+/* REFLET LIQUID GLASS */
 
-        .offer h2 {
-            font-size: 17px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255,255,255,.24),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: .7s;
+    pointer-events: none;
+}
 
-        .price {
-            display: block;
-            width: 100%;
-            text-decoration: none;
-            color: white;
-            font-size: 25px;
-            font-weight: 900;
-            padding: 15px 5px;
-            border-radius: 13px;
-            border: 1px solid #ffffff55;
-            backdrop-filter: blur(15px);
-            transition: .25s;
-        }
+.card:hover::before {
+    left: 150%;
+}
 
-        .price:hover {
-            transform: scale(1.04);
-            filter: brightness(1.2);
-        }
+.card img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 145px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 8px rgba(0,0,0,.25));
+}
 
-        .green .price {
-            background: linear-gradient(135deg,#00d978,#008b48);
-            box-shadow: 0 0 20px #00dc7744;
-        }
+.card h2 {
+    position: relative;
+    z-index: 1;
+    font-size: 18px;
+    font-weight: 900;
+    margin: 15px 0 20px;
+    color: white;
+    text-shadow: 0 2px 4px #0003;
+}
 
-        .blue .price {
-            background: linear-gradient(135deg,#168fff,#0753b7);
-            box-shadow: 0 0 20px #168fff44;
-        }
+/* PRIX */
 
-        .orange .price {
-            background: linear-gradient(135deg,#ffb52e,#e87908);
-            box-shadow: 0 0 20px #ff9e2244;
-        }
+.price {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    padding: 15px 5px;
+    border-radius: 14px;
+    color: white;
+    text-decoration: none;
+    font-size: 27px;
+    font-weight: 900;
+    border: 1px solid rgba(255,255,255,.8);
+    background: rgba(255,255,255,.22);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        inset 0 2px 8px rgba(255,255,255,.3),
+        0 5px 15px rgba(0,0,0,.15);
+    transition: .2s;
+}
 
-        /* OFFRE COMPLETE */
+.price:hover {
+    background: rgba(255,255,255,.38);
+    transform: scale(1.04);
+}
 
-        .combined {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
+/* OFFRE COMPLETE */
 
-        .combined img {
-            width: 45%;
-            height: 125px;
-            margin: 0;
-        }
+.combined {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 145px;
+}
 
-        .plus {
-            font-size: 30px;
-            font-weight: 900;
-            color: white;
-        }
+.combined img {
+    width: 43%;
+    height: 125px;
+}
 
-        @media(max-width: 850px) {
-            .shop-layout {
-                grid-template-columns: 1fr;
-            }
+.plus {
+    font-size: 35px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 2px 5px #0004;
+}
 
-            .player {
-                margin-bottom: 5px;
-            }
+/* RESPONSIVE */
 
-            .offers {
-                grid-template-columns: repeat(2,1fr);
-            }
+@media(max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
 
-            .offer:last-child {
-                grid-column: 1 / -1;
-            }
-        }
+    .player {
+        margin-bottom: 10px;
+    }
+}
 
-        @media(max-width: 520px) {
-            body {
-                padding: 30px 14px;
-            }
+@media(max-width: 650px) {
+    body {
+        padding: 25px 14px;
+    }
 
-            .offers {
-                grid-template-columns: 1fr;
-            }
+    .offers {
+        grid-template-columns: 1fr;
+    }
 
-            .offer:last-child {
-                grid-column: auto;
-            }
+    .card {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 10px 15px;
+        padding: 15px;
+    }
 
-            .offer {
-                display: grid;
-                grid-template-columns: 110px 1fr;
-                align-items: center;
-                gap: 8px 15px;
-            }
+    .card > img,
+    .combined {
+        grid-row: span 2;
+    }
 
-            .offer img,
-            .combined {
-                grid-row: span 2;
-                margin: 0;
-            }
+    .card > img {
+        height: 110px;
+    }
 
-            .offer h2 {
-                margin: 0;
-            }
+    .combined {
+        height: 110px;
+    }
 
-            .price {
-                font-size: 22px;
-                padding: 11px;
-            }
-        }
-    </style>
+    .combined img {
+        height: 95px;
+    }
+
+    .card h2 {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .price {
+        font-size: 23px;
+        padding: 11px;
+    }
+
+    .skin-circle {
+        width: 155px;
+        height: 155px;
+    }
+}
+</style>
 </head>
 
 <body>
-    <main class="container">
 
-        <div class="search-wrapper">
-            <form class="search" id="searchForm">
-                <input
-                    type="text"
-                    id="pseudo"
-                    placeholder="Rechercher un pseudo Fortnite..."
-                    autocomplete="off"
-                    maxlength="30"
-                    required
-                >
-                <button type="submit">RECHERCHER</button>
-            </form>
-        </div>
+<div class="container">
 
-        <section id="result">
+    <div class="search-container">
+        <form class="search" id="searchForm">
+            <input
+                type="text"
+                id="pseudo"
+                placeholder="Rechercher un pseudo Fortnite..."
+                autocomplete="off"
+                maxlength="30"
+                required
+            >
+            <button type="submit">➜</button>
+        </form>
+    </div>
 
-            <div class="shop-layout">
+    <section id="result">
 
-                <div class="player">
-                    <div class="skin-circle">
-                        <img
-                            src="https://pbs.twimg.com/media/HEPyt5tagAApJHd?format=jpg&name=small"
-                            alt="Skin Fortnite"
-                        >
+        <div class="layout">
+
+            <div class="player">
+
+                <div class="skin-circle">
+                    <img
+                        src="https://pbs.twimg.com/media/HEPyt5tagAApJHd?format=jpg&name=small"
+                        alt="Skin Fortnite"
+                    >
+                </div>
+
+                <div class="player-name" id="playerName"></div>
+                <div class="player-label">FORTNITE PLAYER</div>
+
+            </div>
+
+            <div class="offers">
+
+                <!-- 1 : V-BUCKS VERT -->
+
+                <article class="card green">
+
+                    <img src="vbuck.png" alt="V-Bucks">
+
+                    <h2>V-BUCKS</h2>
+
+                    <a
+                        class="price"
+                        href="https://paypal.me/SH0PNOVA/8EUR"
+                        target="_blank"
+                        rel="noopener"
+                    >8 €</a>
+
+                </article>
+
+                <!-- 2 : JETONS BLEU -->
+
+                <article class="card blue">
+
+                    <img src="jeton.png" alt="Jetons">
+
+                    <h2>JETONS</h2>
+
+                    <a
+                        class="price"
+                        href="https://paypal.me/SH0PNOVA/13EUR"
+                        target="_blank"
+                        rel="noopener"
+                    >13 €</a>
+
+                </article>
+
+                <!-- 3 : LES DEUX ORANGE -->
+
+                <article class="card orange">
+
+                    <div class="combined">
+
+                        <img src="vbuck.png" alt="V-Bucks">
+
+                        <span class="plus">+</span>
+
+                        <img src="jeton.png" alt="Jetons">
+
                     </div>
 
-                    <div class="player-name" id="playerName"></div>
-                    <div class="player-label">FORTNITE PLAYER</div>
-                </div>
+                    <h2>OFFRE COMPLÈTE</h2>
 
-                <div class="offers">
+                    <a
+                        class="price"
+                        href="https://paypal.me/SH0PNOVA/17EUR"
+                        target="_blank"
+                        rel="noopener"
+                    >17 €</a>
 
-                    <!-- OFFRE 1 : V-BUCKS -->
+                </article>
 
-                    <article class="offer green">
-                        <img src="vbuck.png" alt="V-Bucks">
-                        <h2>V-BUCKS</h2>
-                        <a
-                            class="price"
-                            href="https://paypal.me/SH0PNOVA/8EUR"
-                            target="_blank"
-                            rel="noopener"
-                        >8 €</a>
-                    </article>
-
-                    <!-- OFFRE 2 : JETONS -->
-
-                    <article class="offer blue">
-                        <img src="jeton.png" alt="Jetons">
-                        <h2>JETONS</h2>
-                        <a
-                            class="price"
-                            href="https://paypal.me/SH0PNOVA/13EUR"
-                            target="_blank"
-                            rel="noopener"
-                        >13 €</a>
-                    </article>
-
-                    <!-- OFFRE 3 : LES DEUX -->
-
-                    <article class="offer orange">
-                        <div class="combined">
-                            <img src="vbuck.png" alt="V-Bucks">
-                            <span class="plus">+</span>
-                            <img src="jeton.png" alt="Jetons">
-                        </div>
-
-                        <h2>OFFRE COMPLÈTE</h2>
-
-                        <a
-                            class="price"
-                            href="https://paypal.me/SH0PNOVA/17EUR"
-                            target="_blank"
-                            rel="noopener"
-                        >17 €</a>
-                    </article>
-
-                </div>
             </div>
-        </section>
 
-    </main>
+        </div>
 
-    <script src="app.js"></script>
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
