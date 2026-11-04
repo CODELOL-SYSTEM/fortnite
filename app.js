@@ -1,26 +1,26 @@
 
-const searchForm = document.getElementById("searchForm");
-const pseudoInput = document.getElementById("pseudo");
+const form = document.getElementById("searchForm");
+const input = document.getElementById("pseudo");
 const result = document.getElementById("result");
 const playerName = document.getElementById("playerName");
 
-// Supprime automatiquement tous les espaces
-pseudoInput.addEventListener("input", () => {
-    const position = pseudoInput.selectionStart;
+// Supprimer automatiquement les espaces
+input.addEventListener("input", () => {
+    const cursor = input.selectionStart;
 
-    pseudoInput.value = pseudoInput.value.replace(/\s/g, "");
+    input.value = input.value.replace(/\s/g, "");
 
-    pseudoInput.setSelectionRange(
-        Math.min(position, pseudoInput.value.length),
-        Math.min(position, pseudoInput.value.length)
+    input.setSelectionRange(
+        Math.min(cursor, input.value.length),
+        Math.min(cursor, input.value.length)
     );
 });
 
-// Affiche le skin et les offres uniquement après recherche
-searchForm.addEventListener("submit", (event) => {
+// Recherche du pseudo
+form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const pseudo = pseudoInput.value.trim();
+    const pseudo = input.value.trim();
 
     if (!pseudo) {
         result.style.display = "none";
@@ -28,6 +28,7 @@ searchForm.addEventListener("submit", (event) => {
     }
 
     playerName.textContent = pseudo;
+
     result.style.display = "block";
 
     result.scrollIntoView({
